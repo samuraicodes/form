@@ -9,14 +9,29 @@ if(!empty($_POST))
 
     if($name != "" && $surname != "")
     {
-        echo "Name: ".$name."<br/>";
-        echo "Surname: ".$surname."<br/>";
-        $dbPost= $db->query("insert into person(name,surname)values('".$name."','".$surname."')");
+        if(!empty($_POST['menu']))
+        {
+            $total = 0;
+
+            foreach ($_POST['menu'] as $selected) {
+                $price = (float) $selected;
+                $total += $price;
+            }
+
+            echo "Name: ".$name."<br/>";
+            echo "Surname: ".$surname."<br/>";
+            echo "Total to pay: " .$total. "<br/>";
+            $dbPost= $db->query("insert into bill(name,surname,total)values('".$name."','".$surname."','" .$total."')");
+        }
+        else 
+        {
+            echo "Please select your products";
+        }
+        
     }
     else
     {
-        echo "Please enter the required data";
-
+        echo "Please enter your name and surname";
     }
 }
 
